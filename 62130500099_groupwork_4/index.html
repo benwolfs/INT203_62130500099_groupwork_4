@@ -1,0 +1,102 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+  <!-- https://google.github.io/material-design-icons/#icon-font-for-the-web -->
+  <!-- Using via Google Web Fonts -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+
+  <!-- https://tailwindcss.com/docs/installation -->
+  <!-- Using Tailwind via CDN -->
+  <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet" />
+
+  <!-- https://v3.vuejs.org/guide/installation.html#release-notes -->
+  <!-- Vue CDN -->
+  <script src="https://unpkg.com/vue@next"></script>
+
+  <link href="https://use.fontawesome.com/releases/v5.4.2/css/all.css" rel="stylesheet">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <link href="/tailwind.css" rel="stylesheet">
+
+</head>
+
+<body id="app" class="bg-indigo-100">
+
+
+
+  <div class="text-center item-center">
+
+    <p class="text-8xl text-center pt-10 pb-16 font-serif">Photo gallery ({{numPic}})</p>
+
+
+
+
+    <div class="space-y-5">
+
+      <!-- <div class="relative text-gray-600"> -->
+
+      <button v-show="show" @click="showSearchBox" class="">
+        <i class="material-icons text-4xl">
+          search
+        </i>
+      </button>
+      <input v-show="!show" v-model="inputSearch" placeholder="Search"
+        class="bg-white h-10 px-5 pr-10 rounded-full text-sm focus:outline-none border-solid">
+      <button v-show="!show" @click="showSearchBox" class="bg-red-700 rounded-md w-14 h-7 text-white">Cancel</button>
+
+      <!-- </div> -->
+
+
+
+
+      <div v-for="pic in search" class="">
+
+
+        <div class="flex items-center flex-col">
+          <!-- <img :src="pic.img" @dblclick=" heart(index)"
+        class="h-2/5 w-2/5 transform hover:scale-110
+        motion-reduce:transform-none duration-700 rounded flex items-center justify-center pb-5" /> -->
+
+          <img :src="pic.img" v-show="pic.id !== currentImg" @click="bigPic(pic.id)"
+            class="h-2/5 w-2/5 rounded flex items-center " />
+
+
+          <div class="w-full flex justify-end mr-60" v-show ="close">
+
+            <i :src="currentImg !== -1 ? pics[currentImg].img : '' " v-show="pic.id == currentImg" class="fas fa-times text-3xl cursor-pointer text-black"  @click="bigPic(-1)"></i>
+
+          </div>
+          <div class="flex bg-black h-4/5 w-4/5 rounded-md ml-10">
+            <img :src="currentImg !== -1 ? pics[currentImg].img : '' " v-show="pic.id == currentImg" @click="bigPic(-1)"
+              class="h-4/5 w-4/5 m-auto mt-16 mb-16" />
+          </div>
+          <!-- </div> -->
+
+          
+           <button class="flex flex-rol items-center mt-5 hover:text-blue-600" @click=" heart(pic.id)">
+            <p class="text-3xl font-serif">{{pic.named}}</p>
+            <i v-show="pic.done" class="material-icons text-red-500 text-5xl">
+              favorite
+            </i>
+          </button>
+        </div>
+
+      
+      </div>
+    </div>
+    <div class="mt-20 text-2xl font-bold"v-if="noPhoto">
+      --No Photo--
+    </div>
+
+  </div>
+
+  <footer class="bg-indigo-100 h-5"></footer>
+
+  <script src="./main.js"></script>
+</body>
+
+</html>
